@@ -176,8 +176,8 @@ if (isDirectRun) {
     res.sendFile(path.join(rootDir, 'index.html'));
   });
 
-  app.listen(PORT, () => {
-    console.log(Server đang chạy tại http://localhost:);
+ app.listen(PORT, () => {
+    console.log(`Server đang chạy tại http://localhost:${PORT}`);
   });
 }
 
