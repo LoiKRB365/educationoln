@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chạm để nhập thông tin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .hint-box {
+      text-align: center;
+      padding: 36px 28px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px dashed #93c5fd;
+      color: #1e3a8a;
+      max-width: 420px;
+      margin: 16px;
+    }
+    .hint-box h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .hint-box p {
+      margin: 0;
+      font-size: 14px;
+      color: #475569;
+    }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      cursor: default;
+      z-index: 20;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+      user-select: text;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-header h2 {
+      margin: 0;
+      font-size: 19px;
+      color: #0f172a;
+    }
+    .close-btn {
+      background: #f1f5f9;
+      color: #334155;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 11px 13px;
+      margin-bottom: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-submit {
+      flex: 1;
+      padding: 11px 14px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-view {
+      padding: 11px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #dc2626;
+    }
+    #status.ok {
+      color: #16a34a;
+    }
+    .submissions-list {
+      margin-top: 16px;
+      max-height: 220px;
+      overflow-y: auto;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+      display: none;
+    }
+    .submissions-list.show {
+      display: block;
+    }
+    .sub-item {
+      padding: 10px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .sub-meta {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hint-box" id="hintBox">
+    <h1>Chạm vào màn hình</h1>
+    <p>Bấm hoặc chạm bất kỳ đâu để mở form nhập thông tin</p>
+  </div>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="card" id="formCard">
+      <div class="card-header">
+        <h2>Nhập thông tin</h2>
+        <button class="close-btn" id="closeBtn" type="button">Đóng</button>
+      </div>
+
+      <form id="infoForm">
+        <input id="nameInput" type="text" placeholder="Tên hoặc biệt danh" />
+        <input id="contactInput" type="text" placeholder="Số điện thoại / Liên hệ" />
+        <textarea id="messageInput" placeholder="Nội dung hoặc ghi chú..."></textarea>
+
+        <div class="actions">
+          <button class="btn-submit" id="submitBtn" type="submit">Gửi thông tin</button>
+          <button class="btn-view" id="viewBtn" type="button">Xem đã gửi</button>
+        </div>
+      </form>
+
+      <div id="status"></div>
+      <div class="submissions-list" id="submissionsList"></div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const formCard = document.getElementById('formCard');
+    const closeBtn = document.getElementById('closeBtn');
+    const infoForm = document.getElementById('infoForm');
+    const nameInput = document.getElementById('nameInput');
+    const contactInput = document.getElementById('contactInput');
+    const messageInput = document.getElementById('messageInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const viewBtn = document.getElementById('viewBtn');
+    const statusEl = document.getElementById('status');
+    const listEl = document.getElementById('submissionsList');
+
+    function openModal() {
+      modal.classList.add('open');
+      statusEl.textContent = '';
+      setTimeout(() => nameInput.focus(), 50);
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+    }
+
+    // Chạm/click vào màn hình khi form đang đóng sẽ mở form
+    document.addEventListener('pointerdown', (e) => {
+      if (!modal.classList.contains('open')) {
+        openModal();
+      } else if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+
+    infoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.className = '';
+
+      const payload = {
+        name: nameInput.value.trim(),
+        contact: contactInput.value.trim(),
+        message: messageInput.value.trim(),
+      };
+
+      if (!payload.name && !payload.contact && !payload.message) {
+        statusEl.textContent = 'Vui lòng nhập ít nhất một thông tin.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      try {
+        const res = await fetch('/api/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          statusEl.textContent = data.message || 'Gửi thất bại.';
+          return;
+        }
+
+        statusEl.textContent = data.message || 'Đã gửi thành công!';
+        statusEl.className = 'ok';
+        infoForm.reset();
+        await loadSubmissions(true);
+      } catch {
+        statusEl.textContent = 'Không thể kết nối tới máy chủ.';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    async function loadSubmissions(keepOpen = false) {
+      if (!keepOpen && listEl.classList.contains('show')) {
+        listEl.classList.remove('show');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/submissions');
+        const data = await res.json().catch(() => ({}));
+        const items = Array.isArray(data.items) ? data.items : [];
+
+        if (!items.length) {
+          listEl.innerHTML = '<div class="sub-item">Chưa có thông tin nào được gửi.</div>';
+        } else {
+          listEl.innerHTML = items
+            .map((item) => {
+              const timeStr = item.createdAt
+                ? new Date(item.createdAt).toLocaleString('vi-VN')
+                : '';
+              return `
+                <div class="sub-item">
+                  <div><strong>Tên:</strong> ${escapeHtml(item.name || '(trống)')}</div>
+                  <div><strong>Liên hệ:</strong> ${escapeHtml(item.contact || '(trống)')}</div>
+                  <div><strong>Nội dung:</strong> ${escapeHtml(item.message || '(trống)')}</div>
+                  <div class="sub-meta">${escapeHtml(timeStr)}</div>
+                </div>
+              `;
+            })
+            .join('');
+        }
+        listEl.classList.add('show');
+      } catch {
+        statusEl.textContent = 'Không tải được danh sách đã gửi.';
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    viewBtn.addEventListener('click', () => loadSubmissions(false));
+  </script>
+</body>
+</html>
