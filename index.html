@@ -3,82 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chạm để nhập thông tin</title>
+  <title>Khóa Học Làm Content Thực Chiến</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
       margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #eef2ff, #f8fafc);
-      font-family: sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #4f46e5);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 40px 28px;
+      box-shadow: 0 16px 36px rgba(29, 78, 216, 0.22);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      line-height: 1.25;
+    }
+    .hero p {
+      margin: 0 0 24px;
+      font-size: 16px;
+      color: #e0e7ff;
+      max-width: 680px;
+    }
+    .btn-primary {
+      background: #ffffff;
+      color: #1d4ed8;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 22px;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      user-select: none;
+      transition: transform 0.15s ease, background 0.15s ease;
     }
-    .hint-box {
-      text-align: center;
-      padding: 36px 28px;
+    .btn-primary:hover {
+      background: #eff6ff;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 10px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+    .box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.85);
-      border: 2px dashed #93c5fd;
-      color: #1e3a8a;
-      max-width: 420px;
-      margin: 16px;
+      padding: 22px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
     }
-    .hint-box h1 {
+    .box h3 {
       margin: 0 0 8px;
-      font-size: 22px;
+      font-size: 18px;
+      color: #0f172a;
     }
-    .hint-box p {
-      margin: 0;
+    .box p {
+      margin: 0 0 16px;
       font-size: 14px;
       color: #475569;
+    }
+    .btn-card {
+      width: 100%;
+      padding: 11px 14px;
+      border: none;
+      border-radius: 9px;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-card:hover {
+      background: #1d4ed8;
     }
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15, 23, 42, 0.58);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 16px;
-      cursor: default;
-      z-index: 20;
+      z-index: 50;
     }
     .modal-backdrop.open {
       display: flex;
     }
-    .card {
+    .modal-card {
       width: 100%;
       max-width: 440px;
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-      user-select: text;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
     }
-    .card-header {
+    .modal-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      align-items: center;
+      margin-bottom: 14px;
     }
-    .card-header h2 {
+    .modal-header h2 {
       margin: 0;
-      font-size: 19px;
-      color: #0f172a;
+      font-size: 20px;
     }
     .close-btn {
       background: #f1f5f9;
-      color: #334155;
       border: none;
       border-radius: 8px;
-      padding: 6px 10px;
+      padding: 6px 11px;
+      font-weight: 600;
       cursor: pointer;
+      color: #334155;
+    }
+    .plan-tag {
+      font-size: 13px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 14px;
       font-weight: 600;
     }
     input, textarea {
@@ -86,35 +164,23 @@
       padding: 11px 13px;
       margin-bottom: 12px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 9px;
       font-size: 14px;
       font-family: inherit;
     }
     textarea {
-      min-height: 80px;
+      min-height: 76px;
       resize: vertical;
     }
-    .actions {
-      display: flex;
-      gap: 10px;
-    }
-    .btn-submit {
-      flex: 1;
-      padding: 11px 14px;
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       background: #2563eb;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-view {
-      padding: 11px 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
-      color: #0f172a;
-      font-weight: 600;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
     }
     #status {
@@ -126,23 +192,23 @@
     #status.ok {
       color: #16a34a;
     }
-    .submissions-list {
-      margin-top: 16px;
-      max-height: 220px;
-      overflow-y: auto;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 12px;
+    .admin-panel {
+      margin-top: 32px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
       display: none;
     }
-    .submissions-list.show {
+    .admin-panel.show {
       display: block;
     }
     .sub-item {
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      border-radius: 10px;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-size: 13px;
     }
     .sub-meta {
@@ -153,82 +219,135 @@
   </style>
 </head>
 <body>
-  <div class="hint-box" id="hintBox">
-    <h1>Chạm vào màn hình</h1>
-    <p>Bấm hoặc chạm bất kỳ đâu để mở form nhập thông tin</p>
-  </div>
+  <div class="container">
+    <section class="hero">
+      <span class="badge">KHÓA HỌC LÀM CONTENT THỰC CHIẾN</span>
+      <h1>Viết Content Cuốn Hút, Làm Video Ngắn &amp; Kéo Khách Tự Nhiên</h1>
+      <p>
+        Lộ trình từ con số 0: tìm ý tưởng, viết hook giữ chân người xem, dựng kịch bản TikTok/Reels/Facebook
+        và xây dựng kênh bán hàng bền vững.
+      </p>
+      <button type="button" class="btn-primary" data-open-form="Khóa Full Content &amp; Video">
+        Đăng ký học ngay
+      </button>
+      <button type="button" class="btn-outline" data-open-form="Nhận tư vấn lộ trình">
+        Nhận tư vấn miễn phí
+      </button>
+    </section>
 
-  <div class="modal-backdrop" id="modal">
-    <div class="card" id="formCard">
-      <div class="card-header">
-        <h2>Nhập thông tin</h2>
-        <button class="close-btn" id="closeBtn" type="button">Đóng</button>
+    <section class="grid">
+      <div class="box">
+        <h3>Module 1: Tư duy &amp; Ý tưởng</h3>
+        <p>Biết cách nghiên cứu tệp khách hàng, chọn ngách rõ ràng và không bao giờ cạn ý tưởng đăng bài.</p>
+        <button type="button" class="btn-card" data-open-form="Module 1 - Tư duy &amp; Ý tưởng">
+          Đăng ký học phần này
+        </button>
       </div>
 
-      <form id="infoForm">
-        <input id="nameInput" type="text" placeholder="Tên hoặc biệt danh" />
-        <input id="contactInput" type="text" placeholder="Số điện thoại / Liên hệ" />
-        <textarea id="messageInput" placeholder="Nội dung hoặc ghi chú..."></textarea>
+      <div class="box">
+        <h3>Module 2: Viết &amp; Kịch bản Video</h3>
+        <p>Thực hành viết tiêu đề, mở đầu 3 giây đầu và kịch bản chuyển đổi tự nhiên cho bài viết lẫn video ngắn.</p>
+        <button type="button" class="btn-card" data-open-form="Module 2 - Viết &amp; Kịch bản Video">
+          Đăng ký học phần này
+        </button>
+      </div>
 
-        <div class="actions">
-          <button class="btn-submit" id="submitBtn" type="submit">Gửi thông tin</button>
-          <button class="btn-view" id="viewBtn" type="button">Xem đã gửi</button>
-        </div>
+      <div class="box">
+        <h3>Module 3: Thực chiến &amp; Tối ưu</h3>
+        <p>Đo lường chỉ số tương tác, chỉnh sửa content theo phản hồi thực tế và xây dựng hệ thống đăng đều.</p>
+        <button type="button" class="btn-card" data-open-form="Module 3 - Thực chiến &amp; Tối ưu">
+          Đăng ký học phần này
+        </button>
+      </div>
+    </section>
+
+    <div style="margin-top: 24px; text-align: right;">
+      <button type="button" id="toggleListBtn" class="close-btn">Xem danh sách đã đăng ký</button>
+    </div>
+
+    <section class="admin-panel" id="submissionsPanel">
+      <h3 style="margin-top: 0;">Danh sách học viên đã đăng ký</h3>
+      <div id="submissionsList"></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="registerModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Đăng ký khóa học</h2>
+        <button type="button" class="close-btn" id="closeModalBtn">Đóng</button>
+      </div>
+
+      <div class="plan-tag" id="selectedPlanLabel">Lựa chọn: Khóa Full Content &amp; Video</div>
+
+      <form id="registerForm">
+        <input id="nameInput" type="text" placeholder="Họ và tên *" required />
+        <input id="ageInput" type="number" min="10" max="100" placeholder="Tuổi *" required />
+        <input id="contactInput" type="tel" placeholder="Số điện thoại *" required />
+        <textarea id="messageInput" placeholder="Mục tiêu học content của bạn (không bắt buộc)..."></textarea>
+        <button type="submit" class="submit-btn" id="submitBtn">Gửi đăng ký</button>
       </form>
 
       <div id="status"></div>
-      <div class="submissions-list" id="submissionsList"></div>
     </div>
   </div>
 
   <script>
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('closeBtn');
-    const infoForm = document.getElementById('infoForm');
+    const modal = document.getElementById('registerModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const selectedPlanLabel = document.getElementById('selectedPlanLabel');
+    const registerForm = document.getElementById('registerForm');
     const nameInput = document.getElementById('nameInput');
+    const ageInput = document.getElementById('ageInput');
     const contactInput = document.getElementById('contactInput');
     const messageInput = document.getElementById('messageInput');
     const submitBtn = document.getElementById('submitBtn');
-    const viewBtn = document.getElementById('viewBtn');
     const statusEl = document.getElementById('status');
+    const toggleListBtn = document.getElementById('toggleListBtn');
+    const panelEl = document.getElementById('submissionsPanel');
     const listEl = document.getElementById('submissionsList');
 
-    function openModal() {
-      modal.classList.add('open');
+    let currentPlan = 'Khóa Full Content & Video';
+
+    function openRegisterForm(planName) {
+      currentPlan = planName || 'Khóa học làm Content';
+      selectedPlanLabel.textContent = 'Lựa chọn: ' + currentPlan;
       statusEl.textContent = '';
+      statusEl.className = '';
+      modal.classList.add('open');
       setTimeout(() => nameInput.focus(), 50);
     }
 
-    function closeModal() {
+    function closeRegisterForm() {
       modal.classList.remove('open');
     }
 
-    document.addEventListener('pointerdown', (e) => {
-      if (!modal.classList.contains('open')) {
-        openModal();
-      } else if (e.target === modal) {
-        closeModal();
-      }
+    document.querySelectorAll('[data-open-form]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        openRegisterForm(btn.getAttribute('data-open-form'));
+      });
     });
 
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeModal();
+    closeModalBtn.addEventListener('click', closeRegisterForm);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeRegisterForm();
     });
 
-    infoForm.addEventListener('submit', async (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       statusEl.textContent = '';
       statusEl.className = '';
 
       const payload = {
         name: nameInput.value.trim(),
+        age: ageInput.value.trim(),
         contact: contactInput.value.trim(),
         message: messageInput.value.trim(),
+        coursePlan: currentPlan,
       };
 
-      if (!payload.name && !payload.contact && !payload.message) {
-        statusEl.textContent = 'Vui lòng nhập ít nhất một thông tin.';
+      if (!payload.name || !payload.age || !payload.contact) {
+        statusEl.textContent = 'Vui lòng nhập đầy đủ Tên, Tuổi và Số điện thoại.';
         return;
       }
 
@@ -242,56 +361,22 @@
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok) {
-          statusEl.textContent = data.message || 'Gửi thất bại.';
+          statusEl.textContent = data.message || 'Gửi đăng ký thất bại.';
           return;
         }
 
-        statusEl.textContent = data.message || 'Đã gửi thành công!';
+        statusEl.textContent = data.message || 'Đăng ký thành công!';
         statusEl.className = 'ok';
-        infoForm.reset();
-        await loadSubmissions(true);
+        registerForm.reset();
+        if (panelEl.classList.contains('show')) {
+          await renderSubmissions();
+        }
       } catch {
         statusEl.textContent = 'Không thể kết nối tới máy chủ.';
       } finally {
         submitBtn.disabled = false;
       }
     });
-
-    async function loadSubmissions(keepOpen = false) {
-      if (!keepOpen && listEl.classList.contains('show')) {
-        listEl.classList.remove('show');
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/submissions');
-        const data = await res.json().catch(() => ({}));
-        const items = Array.isArray(data.items) ? data.items : [];
-
-        if (!items.length) {
-          listEl.innerHTML = '<div class="sub-item">Chưa có thông tin nào được gửi.</div>';
-        } else {
-          listEl.innerHTML = items
-            .map((item) => {
-              const timeStr = item.createdAt
-                ? new Date(item.createdAt).toLocaleString('vi-VN')
-                : '';
-              return `
-                <div class="sub-item">
-                  <div><strong>Tên:</strong> ${escapeHtml(item.name || '(trống)')}</div>
-                  <div><strong>Liên hệ:</strong> ${escapeHtml(item.contact || '(trống)')}</div>
-                  <div><strong>Nội dung:</strong> ${escapeHtml(item.message || '(trống)')}</div>
-                  <div class="sub-meta">${escapeHtml(timeStr)}</div>
-                </div>
-              `;
-            })
-            .join('');
-        }
-        listEl.classList.add('show');
-      } catch {
-        statusEl.textContent = 'Không tải được danh sách đã gửi.';
-      }
-    }
 
     function escapeHtml(str) {
       return String(str)
@@ -301,7 +386,39 @@
         .replace(/"/g, '&quot;');
     }
 
-    viewBtn.addEventListener('click', () => loadSubmissions(false));
+    async function renderSubmissions() {
+      const res = await fetch('/api/submissions');
+      const data = await res.json().catch(() => ({}));
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      if (!items.length) {
+        listEl.innerHTML = '<div class="sub-item">Chưa có học viên nào đăng ký.</div>';
+        return;
+      }
+
+      listEl.innerHTML = items
+        .map((item) => {
+          const timeStr = item.createdAt ? new Date(item.createdAt).toLocaleString('vi-VN') : '';
+          return `
+            <div class="sub-item">
+              <div><strong>Tên:</strong> ${escapeHtml(item.name || '')} | <strong>Tuổi:</strong> ${escapeHtml(item.age ?? '')}</div>
+              <div><strong>SĐT:</strong> ${escapeHtml(item.contact || '')}</div>
+              <div><strong>Gói/Mục tiêu:</strong> ${escapeHtml(item.coursePlan || '')}${item.message ? ' — ' + escapeHtml(item.message) : ''}</div>
+              <div class="sub-meta">${escapeHtml(timeStr)}</div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    toggleListBtn.addEventListener('click', async () => {
+      if (panelEl.classList.contains('show')) {
+        panelEl.classList.remove('show');
+        return;
+      }
+      panelEl.classList.add('show');
+      await renderSubmissions();
+    });
   </script>
 </body>
 </html>

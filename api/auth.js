@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,7 +13,7 @@ let cachedClient = globalThis._mongoClient ?? null;
 
 async function connectToDatabase() {
   if (!uri) {
-    throw new Error('Thiếu biến môi trường MONGODB_URI trong file .env');
+    throw new Error('Thiếu biến môi trường MONGODB_URI trong file .env hoặc Environment Variables');
   }
 
   if (cachedClient) {
@@ -106,23 +106,27 @@ export async function submissionsHandler(req, res) {
     const submissions = db.collection('submissions');
 
     if (req.method === 'POST') {
-      const { name, contact, message } = req.body || {};
+      const { name, age, contact, message, coursePlan } = req.body || {};
       const cleanName = typeof name === 'string' ? name.trim() : '';
+      const cleanAge = age !== undefined && age !== null ? String(age).trim() : '';
       const cleanContact = typeof contact === 'string' ? contact.trim() : '';
       const cleanMessage = typeof message === 'string' ? message.trim() : '';
+      const cleanPlan = typeof coursePlan === 'string' ? coursePlan.trim() : 'Khóa học làm Content';
 
-      if (!cleanName && !cleanContact && !cleanMessage) {
-        return res.status(400).json({ message: 'Vui lòng nhập ít nhất một thông tin!' });
+      if (!cleanName || !cleanContact) {
+        return res.status(400).json({ message: 'Vui lòng nhập đầy đủ Họ tên và Số điện thoại!' });
       }
 
       await submissions.insertOne({
         name: cleanName,
+        age: cleanAge ? Number(cleanAge) || cleanAge : null,
         contact: cleanContact,
         message: cleanMessage,
+        coursePlan: cleanPlan,
         createdAt: new Date(),
       });
 
-      return res.status(200).json({ message: 'Đã gửi thông tin thành công!' });
+      return res.status(200).json({ message: 'Đăng ký giữ chỗ thành công! Chúng tôi sẽ liên hệ sớm.' });
     }
 
     if (req.method === 'GET') {
@@ -173,7 +177,7 @@ if (isDirectRun) {
   });
 
   app.listen(PORT, () => {
-    console.log(`Server đang chạy tại http://localhost:${PORT}`);
+    console.log(Server đang chạy tại http://localhost:);
   });
 }
 
