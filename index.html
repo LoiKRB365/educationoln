@@ -3,289 +3,841 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Khóa Học Làm Content Thực Chiến</title>
+  <title>Khóa Học Làm Content Thực Chiến | Từ Số 0 Đến Chuyên Nghiệp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #070b19;
+      --surface: rgba(255, 255, 255, 0.05);
+      --surface-hover: rgba(255, 255, 255, 0.09);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-2: #ec4899;
+      --accent: #22d3ee;
+      --success: #10b981;
+      --danger: #f43f5e;
+    }
+
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
+
+    /* Animated Ambient Background */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(95px);
+      opacity: 0.45;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 440px;
+      height: 440px;
+      background: #4f46e5;
+      top: -120px;
+      left: -100px;
+    }
+
+    .orb-2 {
+      width: 380px;
+      height: 380px;
+      background: #db2777;
+      top: 32%;
+      right: -120px;
+      animation-delay: -4s;
+    }
+
+    .orb-3 {
+      width: 340px;
+      height: 340px;
+      background: #0891b2;
+      bottom: -100px;
+      left: 25%;
+      animation-delay: -8s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(35px, -45px) scale(1.12); }
+    }
+
+    /* Grid pattern overlay */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      pointer-events: none;
+    }
+
     .container {
-      max-width: 980px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 28px 20px 64px;
+      padding: 0 22px;
     }
-    .hero {
-      background: linear-gradient(135deg, #1d4ed8, #4f46e5);
-      color: #ffffff;
-      border-radius: 20px;
-      padding: 40px 28px;
-      box-shadow: 0 16px 36px rgba(29, 78, 216, 0.22);
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 11, 25, 0.72);
+      border-bottom: 1px solid var(--border);
     }
-    .badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.18);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 14px;
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
     }
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: 32px;
-      line-height: 1.25;
+
+    .logo {
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .hero p {
-      margin: 0 0 24px;
-      font-size: 16px;
-      color: #e0e7ff;
-      max-width: 680px;
+
+    .logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--primary-2));
+      box-shadow: 0 0 14px var(--accent);
+      animation: pulseDot 2s infinite;
     }
-    .btn-primary {
-      background: #ffffff;
-      color: #1d4ed8;
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.75; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       border: none;
-      border-radius: 10px;
-      padding: 13px 22px;
-      font-size: 15px;
+      border-radius: 12px;
+      font-family: inherit;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, background 0.22s ease;
     }
-    .btn-primary:hover {
-      background: #eff6ff;
-      transform: translateY(-1px);
+
+    .btn:active {
+      transform: scale(0.97);
     }
-    .btn-outline {
-      background: transparent;
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 10px;
-      padding: 13px 18px;
+
+    .btn-glow {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      padding: 14px 26px;
       font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-left: 10px;
+      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.38);
+      position: relative;
+      overflow: hidden;
     }
-    .grid {
+
+    .btn-glow::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      transition: left 0.55s ease;
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(236, 72, 153, 0.45);
+    }
+
+    .btn-glow:hover::after {
+      left: 140%;
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 14px 22px;
+      font-size: 15px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 10px 18px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 76px 0 60px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 28px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
     }
-    .box {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
-    }
-    .box h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      color: #0f172a;
-    }
-    .box p {
-      margin: 0 0 16px;
-      font-size: 14px;
-      color: #475569;
-    }
-    .btn-card {
-      width: 100%;
-      padding: 11px 14px;
-      border: none;
-      border-radius: 9px;
-      background: #2563eb;
-      color: #ffffff;
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.16);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+      font-size: 13px;
       font-weight: 600;
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4.4vw, 50px);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 16.5px;
+      max-width: 560px;
+      margin-bottom: 30px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .stat h4 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .stat span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Hero Floating Visual Card */
+    .hero-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      animation: fadeUp 0.8s ease 0.25s both, cardFloat 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .mock-pill {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(34, 211, 238, 0.12);
+      padding: 5px 11px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 18px 0 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-size: 14px;
-      cursor: pointer;
+      color: #e2e8f0;
     }
-    .btn-card:hover {
-      background: #1d4ed8;
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
     }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Sections */
+    section {
+      padding: 56px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 42px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(26px, 3.2vw, 36px);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Module Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+
+    .module-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(129, 140, 248, 0.55);
+      background: var(--surface-hover);
+    }
+
+    .module-num {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .module-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .module-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.35), rgba(219, 39, 119, 0.3));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      padding: 42px 28px;
+      text-align: center;
+      backdrop-filter: blur(14px);
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      margin-bottom: 12px;
+    }
+
+    .cta-banner p {
+      color: #e2e8f0;
+      max-width: 560px;
+      margin: 0 auto 24px;
+      font-size: 15px;
+    }
+
+    /* Modal Form */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.58);
-      display: none;
+      background: rgba(3, 7, 18, 0.76);
+      backdrop-filter: blur(8px);
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 16px;
-      z-index: 50;
+      z-index: 60;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
+
     .modal-backdrop.open {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
     }
-    .modal-card {
+
+    .modal-box {
       width: 100%;
-      max-width: 440px;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
+      max-width: 450px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+      transform: scale(0.92) translateY(14px);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .modal-header {
+
+    .modal-backdrop.open .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 14px;
     }
-    .modal-header h2 {
-      margin: 0;
+
+    .modal-top h3 {
       font-size: 20px;
+      font-weight: 800;
     }
+
     .close-btn {
-      background: #f1f5f9;
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
       border: none;
-      border-radius: 8px;
-      padding: 6px 11px;
-      font-weight: 600;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 18px;
       cursor: pointer;
-      color: #334155;
     }
-    .plan-tag {
-      font-size: 13px;
-      color: #1d4ed8;
-      background: #eff6ff;
-      padding: 6px 10px;
-      border-radius: 8px;
-      margin-bottom: 14px;
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+
+    .plan-badge {
+      display: inline-block;
+      font-size: 12.5px;
       font-weight: 600;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 11px 13px;
-      margin-bottom: 12px;
-      border: 1px solid #cbd5e1;
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.18);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      padding: 6px 12px;
       border-radius: 9px;
-      font-size: 14px;
-      font-family: inherit;
+      margin-bottom: 16px;
     }
-    textarea {
-      min-height: 76px;
+
+    .field {
+      margin-bottom: 13px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 5px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    .field textarea {
+      min-height: 74px;
       resize: vertical;
     }
-    .submit-btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 9px;
-      background: #2563eb;
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 10px;
     }
+
     #status {
       margin-top: 12px;
       font-size: 13px;
       font-weight: 600;
-      color: #dc2626;
+      color: var(--danger);
+      min-height: 20px;
     }
+
     #status.ok {
-      color: #16a34a;
+      color: var(--success);
     }
-    .admin-panel {
-      margin-top: 32px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 20px;
+
+    /* Admin Submissions Drawer */
+    .admin-box {
+      margin-top: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
       display: none;
     }
-    .admin-panel.show {
+
+    .admin-box.show {
       display: block;
+      animation: fadeUp 0.35s ease;
     }
+
     .sub-item {
-      padding: 12px;
-      border-radius: 10px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 10px;
-      font-size: 13px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 13.5px;
     }
+
     .sub-meta {
-      font-size: 11px;
-      color: #64748b;
+      font-size: 11.5px;
+      color: var(--muted);
       margin-top: 4px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 42px;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 13.5px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 44px;
+      }
+      .nav-links a {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span>CONTENT LAB</span>
+      </div>
+      <div class="nav-links">
+        <a href="#lo-trinh">Lộ trình học</a>
+        <a href="#uu-dai">Đăng ký</a>
+        <button type="button" class="btn btn-glow btn-sm" data-open-form="Khóa Full Content Thực Chiến">
+          Đăng ký ngay
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
     <section class="hero">
-      <span class="badge">KHÓA HỌC LÀM CONTENT THỰC CHIẾN</span>
-      <h1>Viết Content Cuốn Hút, Làm Video Ngắn &amp; Kéo Khách Tự Nhiên</h1>
-      <p>
-        Lộ trình từ con số 0: tìm ý tưởng, viết hook giữ chân người xem, dựng kịch bản TikTok/Reels/Facebook
-        và xây dựng kênh bán hàng bền vững.
-      </p>
-      <button type="button" class="btn-primary" data-open-form="Khóa Full Content &amp; Video">
-        Đăng ký học ngay
-      </button>
-      <button type="button" class="btn-outline" data-open-form="Nhận tư vấn lộ trình">
-        Nhận tư vấn miễn phí
-      </button>
+      <div>
+        <div class="hero-badge">KHÓA HỌC LÀM CONTENT THỰC CHIẾN 2026</div>
+        <h1>
+          Biến Ý Tưởng Thành <span class="gradient-text">Content Triệu View</span> &amp; Ra Đơn Đều Đặn
+        </h1>
+        <p>
+          Làm chủ công thức viết bài thu hút, kịch bản video ngắn TikTok / Reels / Facebook và tư duy xây kênh từ con số 0 — học xong áp dụng được ngay.
+        </p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-glow" data-open-form="Khóa Full Content Thực Chiến">
+            Đăng ký giữ chỗ ngay
+          </button>
+          <button type="button" class="btn btn-ghost" data-open-form="Nhận tư vấn lộ trình 1-1">
+            Nhận tư vấn miễn phí
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <h4>12+</h4>
+            <span>Buổi thực hành</span>
+          </div>
+          <div class="stat">
+            <h4>50+</h4>
+            <span>Mẫu Hook &amp; Kịch bản</span>
+          </div>
+          <div class="stat">
+            <h4>1-1</h4>
+            <span>Chữa bài trực tiếp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <span class="mock-pill">LỚP KHAI GIẢNG THÁNG NÀY</span>
+        <h3 style="font-size: 21px; margin-bottom: 6px;">Bạn sẽ làm được gì sau khóa học?</h3>
+        <p style="font-size: 13.5px; color: var(--muted);">Không lý thuyết suông — cầm tay chỉ việc trên chính sản phẩm hoặc kênh của bạn.</p>
+        <ul class="checklist">
+          <li><span class="check-icon">✓</span> Tự lên kế hoạch 30 ngày content không bí ý tưởng</li>
+          <li><span class="check-icon">✓</span> Viết mở đầu 3 giây giữ chân người xem lướt qua</li>
+          <li><span class="check-icon">✓</span> Dựng kịch bản video ngắn &amp; bài bán hàng tự nhiên</li>
+          <li><span class="check-icon">✓</span> Tối ưu chỉ số tiếp cận và tỷ lệ chuyển đổi khách hàng</li>
+        </ul>
+        <button type="button" class="btn btn-glow" style="width: 100%;" data-open-form="Gói Trọn Bộ + Chữa Bài 1-1">
+          Đăng ký nhận ưu đãi học phí
+        </button>
+      </div>
     </section>
 
-    <section class="grid">
-      <div class="box">
-        <h3>Module 1: Tư duy &amp; Ý tưởng</h3>
-        <p>Biết cách nghiên cứu tệp khách hàng, chọn ngách rõ ràng và không bao giờ cạn ý tưởng đăng bài.</p>
-        <button type="button" class="btn-card" data-open-form="Module 1 - Tư duy &amp; Ý tưởng">
-          Đăng ký học phần này
-        </button>
+    <!-- Curriculum -->
+    <section id="lo-trinh">
+      <div class="section-head reveal">
+        <h2>Lộ Trình 3 Chặng Thực Chiến</h2>
+        <p>Chạm vào từng học phần bên dưới để đăng ký học lẻ hoặc nhận tài liệu chi tiết.</p>
       </div>
 
-      <div class="box">
-        <h3>Module 2: Viết &amp; Kịch bản Video</h3>
-        <p>Thực hành viết tiêu đề, mở đầu 3 giây đầu và kịch bản chuyển đổi tự nhiên cho bài viết lẫn video ngắn.</p>
-        <button type="button" class="btn-card" data-open-form="Module 2 - Viết &amp; Kịch bản Video">
-          Đăng ký học phần này
-        </button>
-      </div>
+      <div class="cards-grid">
+        <div class="module-card reveal">
+          <div>
+            <div class="module-num">Chặng 01</div>
+            <h3>Tư Duy Ngách &amp; Kho Ý Tưởng</h3>
+            <p>Xác định chân dung khách hàng mục tiêu, phân tích nỗi đau và xây dựng ma trận chủ đề đăng bài quanh năm.</p>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" style="width: 100%;" data-open-form="Chặng 01 - Tư Duy & Kho Ý Tưởng">
+            Đăng ký chặng này
+          </button>
+        </div>
 
-      <div class="box">
-        <h3>Module 3: Thực chiến &amp; Tối ưu</h3>
-        <p>Đo lường chỉ số tương tác, chỉnh sửa content theo phản hồi thực tế và xây dựng hệ thống đăng đều.</p>
-        <button type="button" class="btn-card" data-open-form="Module 3 - Thực chiến &amp; Tối ưu">
-          Đăng ký học phần này
+        <div class="module-card reveal">
+          <div>
+            <div class="module-num">Chặng 02</div>
+            <h3>Viết Hook &amp; Kịch Bản Video</h3>
+            <p>Công thức viết tiêu đề gây tò mò, kể chuyện chạm cảm xúc và cấu trúc kịch bản TikTok / Reels chuyển đổi cao.</p>
+          </div>
+          <button type="button" class="btn btn-glow btn-sm" style="width: 100%;" data-open-form="Chặng 02 - Viết Hook & Kịch Bản Video">
+            Đăng ký chặng này
+          </button>
+        </div>
+
+        <div class="module-card reveal">
+          <div>
+            <div class="module-num">Chặng 03</div>
+            <h3>Xây Kênh &amp; Tối Ưu Ra Đơn</h3>
+            <p>Đọc chỉ số phân tích, nhân bản nội dung thắng lớn và dẫn dắt người xem từ tương tác sang inbox mua hàng.</p>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" style="width: 100%;" data-open-form="Chặng 03 - Xây Kênh & Tối Ưu Ra Đơn">
+            Đăng ký chặng này
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="uu-dai" class="reveal">
+      <div class="cta-banner">
+        <h2>Sẵn sàng bắt đầu hành trình làm Content?</h2>
+        <p>Để lại Tên, Tuổi và Số điện thoại — đội ngũ hỗ trợ sẽ gửi lộ trình chi tiết và giữ suất ưu đãi cho bạn.</p>
+        <button type="button" class="btn btn-glow" data-open-form="Đăng Ký Khóa Học Content (Ưu Đãi)">
+          Mở form đăng ký ngay
         </button>
       </div>
     </section>
 
-    <div style="margin-top: 24px; text-align: right;">
-      <button type="button" id="toggleListBtn" class="close-btn">Xem danh sách đã đăng ký</button>
+    <!-- Admin quick view -->
+    <div id="adminBox" class="admin-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong>Danh sách học viên đã gửi (MongoDB)</strong>
+        <button type="button" id="refreshListBtn" class="btn btn-ghost btn-sm">Làm mới</button>
+      </div>
+      <div id="submissionsList"></div>
     </div>
 
-    <section class="admin-panel" id="submissionsPanel">
-      <h3 style="margin-top: 0;">Danh sách học viên đã đăng ký</h3>
-      <div id="submissionsList"></div>
-    </section>
-  </div>
+    <footer>
+      <span>© 2026 Content Lab — Khóa học sáng tạo nội dung thực chiến.</span>
+      <button type="button" id="toggleAdminBtn" class="btn btn-ghost btn-sm">Xem danh sách đăng ký</button>
+    </footer>
+  </main>
 
+  <!-- Registration Modal -->
   <div class="modal-backdrop" id="registerModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2>Đăng ký khóa học</h2>
-        <button type="button" class="close-btn" id="closeModalBtn">Đóng</button>
+    <div class="modal-box">
+      <div class="modal-top">
+        <h3>Đăng ký khóa học</h3>
+        <button type="button" class="close-btn" id="closeModalBtn" aria-label="Đóng">✕</button>
       </div>
 
-      <div class="plan-tag" id="selectedPlanLabel">Lựa chọn: Khóa Full Content &amp; Video</div>
+      <div class="plan-badge" id="planBadge">Gói chọn: Khóa Full Content Thực Chiến</div>
 
       <form id="registerForm">
-        <input id="nameInput" type="text" placeholder="Họ và tên *" required />
-        <input id="ageInput" type="number" min="10" max="100" placeholder="Tuổi *" required />
-        <input id="contactInput" type="tel" placeholder="Số điện thoại *" required />
-        <textarea id="messageInput" placeholder="Mục tiêu học content của bạn (không bắt buộc)..."></textarea>
-        <button type="submit" class="submit-btn" id="submitBtn">Gửi đăng ký</button>
+        <div class="form-row">
+          <div class="field">
+            <label for="nameInput">Họ và tên *</label>
+            <input id="nameInput" type="text" placeholder="Ví dụ: Nguyễn Minh Anh" required />
+          </div>
+          <div class="field">
+            <label for="ageInput">Tuổi *</label>
+            <input id="ageInput" type="number" min="10" max="100" placeholder="22" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="contactInput">Số điện thoại / Zalo *</label>
+          <input id="contactInput" type="tel" placeholder="Ví dụ: 0912 345 678" required />
+        </div>
+
+        <div class="field">
+          <label for="messageInput">Mục tiêu hoặc câu hỏi (không bắt buộc)</label>
+          <textarea id="messageInput" placeholder="Bạn muốn làm content cho TikTok, Facebook hay bán hàng..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-glow" style="width: 100%;" id="submitBtn">
+          Xác nhận đăng ký
+        </button>
       </form>
 
       <div id="status"></div>
@@ -295,7 +847,7 @@
   <script>
     const modal = document.getElementById('registerModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
-    const selectedPlanLabel = document.getElementById('selectedPlanLabel');
+    const planBadge = document.getElementById('planBadge');
     const registerForm = document.getElementById('registerForm');
     const nameInput = document.getElementById('nameInput');
     const ageInput = document.getElementById('ageInput');
@@ -303,34 +855,38 @@
     const messageInput = document.getElementById('messageInput');
     const submitBtn = document.getElementById('submitBtn');
     const statusEl = document.getElementById('status');
-    const toggleListBtn = document.getElementById('toggleListBtn');
-    const panelEl = document.getElementById('submissionsPanel');
+    const toggleAdminBtn = document.getElementById('toggleAdminBtn');
+    const refreshListBtn = document.getElementById('refreshListBtn');
+    const adminBox = document.getElementById('adminBox');
     const listEl = document.getElementById('submissionsList');
 
-    let currentPlan = 'Khóa Full Content & Video';
+    let selectedPlan = 'Khóa Full Content Thực Chiến';
 
-    function openRegisterForm(planName) {
-      currentPlan = planName || 'Khóa học làm Content';
-      selectedPlanLabel.textContent = 'Lựa chọn: ' + currentPlan;
+    function openForm(plan) {
+      selectedPlan = plan || 'Khóa Full Content Thực Chiến';
+      planBadge.textContent = 'Gói chọn: ' + selectedPlan;
       statusEl.textContent = '';
       statusEl.className = '';
       modal.classList.add('open');
-      setTimeout(() => nameInput.focus(), 50);
+      setTimeout(() => nameInput.focus(), 80);
     }
 
-    function closeRegisterForm() {
+    function closeForm() {
       modal.classList.remove('open');
     }
 
     document.querySelectorAll('[data-open-form]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        openRegisterForm(btn.getAttribute('data-open-form'));
+        openForm(btn.getAttribute('data-open-form'));
       });
     });
 
-    closeModalBtn.addEventListener('click', closeRegisterForm);
+    closeModalBtn.addEventListener('click', closeForm);
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeRegisterForm();
+      if (e.target === modal) closeForm();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeForm();
     });
 
     registerForm.addEventListener('submit', async (e) => {
@@ -343,15 +899,17 @@
         age: ageInput.value.trim(),
         contact: contactInput.value.trim(),
         message: messageInput.value.trim(),
-        coursePlan: currentPlan,
+        coursePlan: selectedPlan,
       };
 
       if (!payload.name || !payload.age || !payload.contact) {
-        statusEl.textContent = 'Vui lòng nhập đầy đủ Tên, Tuổi và Số điện thoại.';
+        statusEl.textContent = 'Vui lòng nhập đầy đủ Họ tên, Tuổi và Số điện thoại.';
         return;
       }
 
       submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang gửi...';
+
       try {
         const res = await fetch('/api/submissions', {
           method: 'POST',
@@ -368,13 +926,15 @@
         statusEl.textContent = data.message || 'Đăng ký thành công!';
         statusEl.className = 'ok';
         registerForm.reset();
-        if (panelEl.classList.contains('show')) {
-          await renderSubmissions();
+
+        if (adminBox.classList.contains('show')) {
+          await loadSubmissions();
         }
       } catch {
         statusEl.textContent = 'Không thể kết nối tới máy chủ.';
       } finally {
         submitBtn.disabled = false;
+        submitBtn.textContent = 'Xác nhận đăng ký';
       }
     });
 
@@ -386,39 +946,61 @@
         .replace(/"/g, '&quot;');
     }
 
-    async function renderSubmissions() {
-      const res = await fetch('/api/submissions');
-      const data = await res.json().catch(() => ({}));
-      const items = Array.isArray(data.items) ? data.items : [];
+    async function loadSubmissions() {
+      listEl.innerHTML = '<div class="sub-item">Đang tải dữ liệu...</div>';
+      try {
+        const res = await fetch('/api/submissions');
+        const data = await res.json().catch(() => ({}));
+        const items = Array.isArray(data.items) ? data.items : [];
 
-      if (!items.length) {
-        listEl.innerHTML = '<div class="sub-item">Chưa có học viên nào đăng ký.</div>';
-        return;
+        if (!items.length) {
+          listEl.innerHTML = '<div class="sub-item">Chưa có học viên nào đăng ký.</div>';
+          return;
+        }
+
+        listEl.innerHTML = items
+          .map((item) => {
+            const timeStr = item.createdAt ? new Date(item.createdAt).toLocaleString('vi-VN') : '';
+            return `
+              <div class="sub-item">
+                <div><strong>Tên:</strong> ${escapeHtml(item.name || '')} • <strong>Tuổi:</strong> ${escapeHtml(item.age ?? '')}</div>
+                <div><strong>SĐT:</strong> ${escapeHtml(item.contact || '')}</div>
+                <div><strong>Gói:</strong> ${escapeHtml(item.coursePlan || '')}${item.message ? ' — ' + escapeHtml(item.message) : ''}</div>
+                <div class="sub-meta">${escapeHtml(timeStr)}</div>
+              </div>
+            `;
+          })
+          .join('');
+      } catch {
+        listEl.innerHTML = '<div class="sub-item">Không tải được danh sách.</div>';
       }
-
-      listEl.innerHTML = items
-        .map((item) => {
-          const timeStr = item.createdAt ? new Date(item.createdAt).toLocaleString('vi-VN') : '';
-          return `
-            <div class="sub-item">
-              <div><strong>Tên:</strong> ${escapeHtml(item.name || '')} | <strong>Tuổi:</strong> ${escapeHtml(item.age ?? '')}</div>
-              <div><strong>SĐT:</strong> ${escapeHtml(item.contact || '')}</div>
-              <div><strong>Gói/Mục tiêu:</strong> ${escapeHtml(item.coursePlan || '')}${item.message ? ' — ' + escapeHtml(item.message) : ''}</div>
-              <div class="sub-meta">${escapeHtml(timeStr)}</div>
-            </div>
-          `;
-        })
-        .join('');
     }
 
-    toggleListBtn.addEventListener('click', async () => {
-      if (panelEl.classList.contains('show')) {
-        panelEl.classList.remove('show');
+    toggleAdminBtn.addEventListener('click', async () => {
+      if (adminBox.classList.contains('show')) {
+        adminBox.classList.remove('show');
         return;
       }
-      panelEl.classList.add('show');
-      await renderSubmissions();
+      adminBox.classList.add('show');
+      await loadSubmissions();
     });
+
+    refreshListBtn.addEventListener('click', loadSubmissions);
+
+    // Scroll reveal animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.14 }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
 </body>
 </html>
